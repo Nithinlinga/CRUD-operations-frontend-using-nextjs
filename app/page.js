@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 export default function Home() {
   const [students, setStudents] = useState([]);
@@ -18,7 +19,8 @@ export default function Home() {
       const response = await axios.get('https://crud-operations-backend-using-express.vercel.app/api/students');
       setStudents(response.data);
     } catch (error) {
-      setErrorMessage('Failed to fetch students. Please try again later.');
+      toast.error('Failed to fetch students. Please try again later.')
+      // setErrorMessage();
       console.error(error);
     }
   };
@@ -27,8 +29,9 @@ export default function Home() {
     try {
       await axios.delete(`https://crud-operations-backend-using-express.vercel.app/api/students/${id}`);
       fetchStudents(); // Refresh after deleting
+      toast.success("Deleted successfully!"); 
     } catch (error) {
-      setErrorMessage('Failed to delete student. Please try again later.');
+      toast.error('Failed to delete student');
       console.error(error);
     }
   };
@@ -44,6 +47,7 @@ export default function Home() {
     // Check if any field is empty
     if (!name || !studentClass || !roll_number) {
       setErrorMessage('Please fill in all fields.');
+      toast.error("Fill in all fields.");
       return;
     }
   
@@ -54,6 +58,7 @@ export default function Home() {
       roll_number === editingStudent.roll_number
     ) {
       setErrorMessage('No changes detected. Please modify the fields to update.');
+      toast.error("No changes detected.");
       return;
     }
   
@@ -62,8 +67,10 @@ export default function Home() {
       await axios.put(`https://crud-operations-backend-using-express.vercel.app/api/students/${editingStudent.id}`, form);
       fetchStudents(); // Refresh the students list after updating
       setEditingStudent(null); // Reset editing mode
+      toast.success("Updated")
     } catch (error) {
       setErrorMessage('Failed to update student. Please try again later.');
+      toast.error('Failed to update student');
       console.error(error);
     }
   };
@@ -92,6 +99,7 @@ export default function Home() {
     // Check if any of the fields are empty
     if (!name || !studentClass || !roll_number) {
       setErrorMessage('All fields are required!'); // Error message for empty fields
+      toast.error('All fields are required!');
       return;
     }
 
@@ -100,9 +108,11 @@ export default function Home() {
       await axios.post('https://crud-operations-backend-using-express.vercel.app/api/students', newStudent);
       fetchStudents(); // Refresh the student list after adding
       setNewStudent({ name: '', class: '', roll_number: '' }); 
+      toast.success('Created a student')
     } catch (error) {
       // Handle errors during the API request
       setErrorMessage('Failed to create student. Please try again later.');
+      toast.error("Failed to create")
       console.error(error);
     }
   };  
@@ -118,6 +128,7 @@ export default function Home() {
       type="text"
       name="name"
       placeholder="Name"
+      required
       value={newStudent.name}
       onChange={handleCreateInputChange}
       className="w-full sm:w-1/3 md:w-1/2 lg:w-1/3 p-2 border border-gray-300 rounded-md"
@@ -126,6 +137,7 @@ export default function Home() {
       type="text"
       name="class"
       placeholder="Class"
+      required
       value={newStudent.class}
       onChange={handleCreateInputChange}
       className="w-full sm:w-1/3 md:w-1/2 lg:w-1/3 p-2 border border-gray-300 rounded-md"
@@ -134,6 +146,7 @@ export default function Home() {
       type="number"
       name="roll_number"
       placeholder="Roll Number"
+      required
       value={newStudent.roll_number}
       onChange={handleCreateInputChange}
       className="w-full sm:w-1/3 md:w-1/2 lg:w-1/3 p-2 border border-gray-300 rounded-md"
@@ -166,6 +179,7 @@ export default function Home() {
                 <input
                   type="text"
                   name="name"
+                  required
                   value={form.name}
                   onChange={handleInputChange}
                   className="w-full h-10 p-2 border border-gray-300 rounded-md"
@@ -179,6 +193,7 @@ export default function Home() {
                 <input
                   type="text"
                   name="class"
+                  required
                   value={form.class}
                   onChange={handleInputChange}
                   className="w-full h-10 p-2 border border-gray-300 rounded-md"
@@ -192,6 +207,7 @@ export default function Home() {
                 <input
                   type="number"
                   name="roll_number"
+                  required
                   value={form.roll_number}
                   onChange={handleInputChange}
                   className="w-full h-10 p-2 border border-gray-300 rounded-md"
