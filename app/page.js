@@ -46,7 +46,7 @@ export default function Home() {
   
     // Check if any field is empty
     if (!name || !studentClass || !roll_number) {
-      setErrorMessage('Please fill in all fields.');
+      // setErrorMessage('Please fill in all fields.');
       toast.error("Fill in all fields.");
       return;
     }
@@ -57,8 +57,7 @@ export default function Home() {
       studentClass === editingStudent.class &&
       roll_number === editingStudent.roll_number
     ) {
-      setErrorMessage('No changes detected. Please modify the fields to update.');
-      toast.error("No changes detected.");
+      toast.error("No changes detected to Update");
       return;
     }
   
@@ -69,7 +68,6 @@ export default function Home() {
       setEditingStudent(null); // Reset editing mode
       toast.success("Updated")
     } catch (error) {
-      setErrorMessage('Failed to update student. Please try again later.');
       toast.error('Failed to update student');
       console.error(error);
     }
@@ -98,7 +96,7 @@ export default function Home() {
     
     // Check if any of the fields are empty
     if (!name || !studentClass || !roll_number) {
-      setErrorMessage('All fields are required!'); // Error message for empty fields
+      // setErrorMessage('All fields are required!'); // Error message for empty fields
       toast.error('All fields are required!');
       return;
     }
@@ -128,7 +126,7 @@ export default function Home() {
       type="text"
       name="name"
       placeholder="Name"
-      required
+      // required
       value={newStudent.name}
       onChange={handleCreateInputChange}
       className="w-full sm:w-1/3 md:w-1/2 lg:w-1/3 p-2 border border-gray-300 rounded-md"
@@ -137,7 +135,7 @@ export default function Home() {
       type="text"
       name="class"
       placeholder="Class"
-      required
+      // required
       value={newStudent.class}
       onChange={handleCreateInputChange}
       className="w-full sm:w-1/3 md:w-1/2 lg:w-1/3 p-2 border border-gray-300 rounded-md"
@@ -146,7 +144,7 @@ export default function Home() {
       type="number"
       name="roll_number"
       placeholder="Roll Number"
-      required
+      // required
       value={newStudent.roll_number}
       onChange={handleCreateInputChange}
       className="w-full sm:w-1/3 md:w-1/2 lg:w-1/3 p-2 border border-gray-300 rounded-md"
@@ -179,7 +177,7 @@ export default function Home() {
                 <input
                   type="text"
                   name="name"
-                  required
+                  // required
                   value={form.name}
                   onChange={handleInputChange}
                   className="w-full h-10 p-2 border border-gray-300 rounded-md"
